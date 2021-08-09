@@ -42,7 +42,7 @@ def ConnectRDP(host):
         #d_error = codecs.decode(error,'UTF-8')
         #print ("Output:"+d_out)
         #print("Error:"+d_error)
-        id=int(str(d_out))
+        id=int(d_out)
         subprocess.call('mstsc /v:'+host+' /shadow:'+str(id)+' /noconsentprompt /control')
         #print('mstsc /v:'+host+' /shadow:'+str(id)+' /noconsentprompt /control')
     else:

@@ -6,7 +6,7 @@ Created on Thu Dec  3 17:59:03 2020
 """
 
 from PyQt5.QtWidgets import (QWidget, QMainWindow, QAction, QListWidget, 
-                            QHBoxLayout, QListWidgetItem) #, QPushButton, QLabel
+                            QHBoxLayout, QListWidgetItem, QMessageBox) #, QPushButton, QLabel
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt 
 from PyQt5.QtGui import QIcon
@@ -111,12 +111,17 @@ class MainWidget(QMainWindow):
         if hasattr(self.listwidget.item(i), 'text'):
             host = self.listwidget.item(i).text()
             host = host [:host.find(' ')]
+            error_msg = QMessageBox()
             if pclist.ping(host):
                 if pclist.ConnectRDP(host):
                     self.statusBar().showMessage('Done')
                 else:
                     self.statusBar().showMessage('Connection error to '+host)
-        
+                    #QMessageBox.question(self, 'Error', 'Connection error to '+host, QMessageBox.Cancel, QMessageBox.Cancel)
+                    error_msg.critical(self,'error','Connection error to ' + host)
+            else:
+                #QMessageBox.question(self, 'Error', 'Host is offline '+host, QMessageBox.Cancel, QMessageBox.Cancel)
+                error_msg.critical(self,'error','Host' + host + ' is offline')
     # load domain pc list    
     def loadList(self):
         self.listwidget.clear();
